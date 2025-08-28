@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="theme-color" content="#1A2E06" />
+  <meta name="description" content="Tu vida vikinga completa: necesidades, tareas y gloria" />
+  <link rel="manifest" href="manifest.json" />
+  <link rel="icon" href="icon.png" sizes="512x512" type="image/png" />
+  <link rel="apple-touch-icon" href="icon.png" />
+  <link href="https://fonts.googleapis.com/css2?family=MedievalSharp&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1A2E06;
+      --celtic: #3D9970;
+      --frankish: #8B0000;
+      --northern: #8B4513;
+      --gold: #FFD700;
+      --dark: #0F1A0F;
+      --light: #F0F8E6;
+      --ui-border: #5D4037;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'MedievalSharp', cursive;
+      background: url('https://placehold.co/1920x1080/0F1A0F/1A2E06?text=') center/cover fixed;
+      color: var(--light);
+      line-height: 1.6;
+      padding: 20px;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: rgba(0, 0, 0, 0.8);
+      border: 4px solid var(--gold);
+      border-radius: 15px;
+      padding: 20px;
+      box-shadow: 0 0 30px rgba(255, 215, 0, 0.3);
+    }
+    header {
+      text-align: center;
+      margin-bottom: 20px;
+      border-bottom: 3px solid var(--gold);
+      padding-bottom: 15px;
+    }
+    h1 {
+      font-size: 2.8em;
+      color: var(--gold);
+      text-shadow: 3px 3px 6px #000;
+    }
+    .subtitle {
+      font-size: 1.2em;
+      color: #AAA;
+    }
+
+    .profile {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 15px;
+      background: rgba(26, 46, 6, 0.5);
+      padding: 15px;
+      border-radius: 12px;
+      margin-bottom: 20px;
+      border: 2px solid var(--ui-border);
+    }
+    .profile-item {
+      flex: 1;
+      min-width: 150px;
+    }
+    .xp-bar {
+      width: 100%;
+      height: 18px;
+      background: #000;
+      border: 1px solid var(--gold);
+      border-radius: 10px;
+      overflow: hidden;
+      margin: 5px 0;
+    }
+    .xp-fill {
+      height: 100%;
+      width: 0%;
+      background: var(--gold);
+      transition: width 0.5s ease;
+    }
+
+    .needs {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+    }
+    .need-item {
+      flex: 1;
+      min-width: 150px;
+      background: rgba(26, 46, 6, 0.5);
+      padding: 10px;
+      border-radius: 10px;
+      border: 1px solid #5D4037;
+    }
+    .need-bar {
+      width: 100%;
+      height: 15px;
+      background: #000;
+      border: 1px solid var(--gold);
+      border-radius: 8px;
+      overflow: hidden;
+      margin: 5px 0;
+    }
+    .need-fill {
+      height: 100%;
+      width: 100%;
+      background: var(--gold);
+      transition: width 0.2s linear;
+    }
+    .need-warning {
+      font-size: 0.9em;
+      color: #FF6B6B;
+      display: none;
+    }
+    .need-btn {
+      margin-top: 8px;
+      padding: 6px 12px;
+      background: var(--gold);
+      color: var(--dark);
+      border: none;
+      border-radius: 6px;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 0.9em;
+      cursor: pointer;
+      width: 100%;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 20px;
+      gap: 5px;
+    }
+    .tab {
+      padding: 12px 20px;
+      background: var(--ui-border);
+      color: #DDD;
+      border: none;
+      cursor: pointer;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 1.1em;
+      border-radius: 8px 8px 0 0;
+    }
+    .tab.active {
+      background: var(--gold);
+      color: var(--dark);
+      font-weight: bold;
+    }
+
+    .task-list {
+      list-style: none;
+    }
+    .task-item {
+      background: rgba(255, 255, 255, 0.05);
+      margin: 12px 0;
+      padding: 15px;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      border: 1px solid #333;
+    }
+    .task-item.completed {
+      background: rgba(60, 100, 60, 0.3);
+      border-color: #2E7D32;
+      opacity: 0.7;
+    }
+    .task-checkbox {
+      margin-right: 15px;
+      width: 22px;
+      height: 22px;
+      cursor: pointer;
+    }
+    .task-content {
+      flex: 1;
+    }
+    .task-type {
+      font-size: 0.8em;
+      color: var(--gold);
+      margin-bottom: 4px;
+    }
+    .task-points {
+      color: var(--gold);
+      font-weight: bold;
+    }
+
+    .achievement-item {
+      display: flex;
+      margin: 15px 0;
+      padding: 15px;
+      background: rgba(0, 0, 0, 0.3);
+      border-radius: 10px;
+      border: 2px dashed #555;
+      align-items: center;
+    }
+    .achievement-icon {
+      width: 60px;
+      height: 60px;
+      background: #222;
+      border: 2px solid var(--gold);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-right: 15px;
+      font-size: 1.4em;
+    }
+    .achievement-locked {
+      opacity: 0.5;
+    }
+    .achievement-info h4 {
+      color: var(--gold);
+      margin: 0 0 4px 0;
+    }
+    .achievement-info p {
+      font-size: 0.9em;
+      margin: 0;
+    }
+
+    .btn-reset {
+      display: block;
+      margin: 25px auto;
+      padding: 12px 25px;
+      background: var(--dark);
+      color: var(--gold);
+      border: 2px solid var(--gold);
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'MedievalSharp', cursive;
+      font-size: 1.1em;
+    }
+
+    .alert {
+      background: #8B0000;
+      color: white;
+      padding: 10px;
+      border-radius: 8px;
+      margin: 10px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 30px;
+      font-size: 0.9em;
+      color: #777;
+    }
+
+    /* === PESTAÑAS: mostrar/ocultar contenido === */
+    .tab-content {
+      display: none;
+      padding: 20px;
+      background: rgba(0, 0, 0, 0.4);
+      border-radius: 10px;
+      border: 1px solid var(--ui-border);
+    }
+    .tab-content.active {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>⚔️ Crónica de la Gloría Eterna</h1>
+      <p class="subtitle">Tu vida vikinga en armonía con el tiempo</p>
+    </header>
+
+    <!-- Perfil Vikingo -->
+    <div class="profile">
+      <div class="profile-item">
+        <strong>Eivor, el Legendario</strong><br>
+        <span>Rango: <span id="rank">Jefe de Asentamiento</span></span><br>
+        <span>Nivel: <span id="level">1</span></span>
+      </div>
+      <div class="profile-item">
+        <small>Glory Total: <span id="points">0</span></small><br>
+        <div class="xp-bar">
+          <div class="xp-fill" id="xp-fill"></div>
+        </div>
+        <small>Progreso de Gloria</small>
+      </div>
+    </div>
+
+    <!-- Necesidades -->
+    <div class="needs">
+      <div class="need-item">
+        <strong>🍽️ Alimentación</strong>
+        <div class="need-bar">
+          <div class="need-fill" id="food-fill"></div>
+        </div>
+        <small>Hambre crece con el tiempo</small>
+        <div class="need-warning" id="food-alert">¡Es hora de almorzar!</div>
+        <button class="need-btn" onclick="satisfacer('food')">✅ Comí</button>
+      </div>
+      <div class="need-item">
+        <strong>🛏️ Descanso</strong>
+        <div class="need-bar">
+          <div class="need-fill" id="sleep-fill"></div>
+        </div>
+        <small>La noche exige reposo</small>
+        <div class="need-warning" id="sleep-alert">¡Ve a dormir!</div>
+        <button class="need-btn" onclick="satisfacer('sleep')">✅ Dormí</button>
+      </div>
+      <div class="need-item">
+        <strong>👥 Comunidad</strong>
+        <div class="need-bar">
+          <div class="need-fill" id="social-fill"></div>
+        </div>
+        <small>Días sin socializar</small>
+        <div class="need-warning" id="social-alert">¡Visita a tus amigos!</div>
+        <button class="need-btn" onclick="satisfacer('social')">✅ Socialicé</button>
+      </div>
+    </div>
+
+    <!-- Pestañas -->
+    <div class="tabs">
+      <button class="tab active" id="tab-diaria">🌞 Diaria</button>
+      <button class="tab" id="tab-continua">🔁 Continua</button>
+      <button class="tab" id="tab-semanal">📅 Semanal</button>
+      <button class="tab" id="tab-logros">🏆 Logros</button>
+    </div>
+
+    <!-- Sección Diaria -->
+    <div class="tab-content active" id="content-diaria">
+      <h3>🌅 Tareas Diarias</h3>
+      <div id="daily-timer" class="alert" style="background:var(--northern)">
+        Próximas tareas en: <strong id="time-left">--:--:--</strong>
+      </div>
+      <ul class="task-list" id="tasks-diaria"></ul>
+    </div>
+
+    <!-- Sección Continua -->
+    <div class="tab-content" id="content-continua">
+      <h3>🎯 Tareas Continuas</h3>
+      <p>Completa conjuntos para desbloquear nuevos desafíos.</p>
+      <ul class="task-list" id="tasks-continua"></ul>
+    </div>
+
+    <!-- Sección Semanal -->
+    <div class="tab-content" id="content-semanal">
+      <h3>🏆 Desafíos Semanales</h3>
+      <ul class="task-list" id="tasks-semanal"></ul>
+    </div>
+
+    <!-- Sección de Logros -->
+    <div class="tab-content" id="content-logros">
+      <h3>🏆 Logros Vikingos</h3>
+      <div id="achievements-list"></div>
+    </div>
+
+    <button class="btn-reset" id="reset-btn">🔁 Reiniciar Todo</button>
+
+    <footer>"La gloria no es un destino, es una vida bien vivida." — Eivor</footer>
+  </div>
+
+  <script>
+    // === CONTROL DE VERSIÓN (anti-caché) ===
+    const CURRENT_VERSION = 'v1.7';
+    const storedVersion = localStorage.getItem('appVersion');
+    if (storedVersion !== CURRENT_VERSION) {
+      if ('caches' in window) {
+        caches.keys().then(names => names.forEach(name => caches.delete(name)));
+      }
+      localStorage.setItem('appVersion', CURRENT_VERSION);
+      location.reload();
+    }
+
+    // === TAREAS CONTINUAS ===
+    const TASKS_CONTINUA_POOL = [
+      { text: "Pesca 5 peces en el río Shannon (Irlanda)", type: "Pesca", points: 30 },
+      { text: "Caza un ciervo legendario en Mercia", type: "Caza", points: 40 },
+      { text: "Gana una partida de Orlog", type: "Juego", points: 30 },
+      { text: "Roba 5 cofres escondidos en cuevas", type: "Farmeo", points: 40 },
+      { text: "Mata a 20 enemigos con armas pesadas", type: "Combate", points: 40 },
+      { text: "Visita el Círculo de Piedras de Tara (Irlanda)", type: "Exploración", points: 40 },
+      { text: "Conseguir un punto de habilidad", type: "Progreso", points: 40 },
+      { text: "Completa una misión de rebelde irlandés", type: "DLC Irlanda", points: 50 },
+      { text: "Completa una misión de asedio en París", type: "DLC París", points: 60 },
+      { text: "Domestica un caballo blanco", type: "Montura", points: 40 },
+      { text: "Completa un asalto sin morir", type: "Liderazgo", points: 75 }
+    ];
+
+    // === LOGROS ===
+    const achievementsList = [
+  {
+    id: 'ach-daily',
+    title: 'Guardián del Día',
+    desc: 'Completa 7 días seguidos de tareas diarias',
+    icon: '🌞',
+    condition: () => {
+      // Contamos cuántas tareas diarias completadas
+      return tasks.diaria.filter(t => t.completed).length >= 7;
+    }
+  },
+  {
+    id: 'ach-beast',
+    title: 'Hermano de Fenrir',
+    desc: 'Completa 15 tareas de caza o naturaleza',
+    icon: '🐺',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && (t.type === 'Caza' || t.text.includes('caza') || t.text.includes('lobo'))
+      ).length;
+      return completed >= 15;
+    }
+  },
+  {
+    id: 'ach-orlog',
+    title: 'Maestro del Orlog',
+    desc: 'Gana 5 partidas de Orlog',
+    icon: '🎲',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && (t.text.includes('Orlog') || t.text.includes('juega'))
+      ).length;
+      return completed >= 5;
+    }
+  },
+  {
+    id: 'ach-explorer',
+    title: 'Explorador del Mundo',
+    desc: 'Completa 20 tareas de exploración',
+    icon: '🌍',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && t.type === 'Exploración'
+      ).length;
+      return completed >= 20;
+    }
+  },
+  {
+    id: 'ach-silent',
+    title: 'Fantasma de Midgard',
+    desc: 'Completa 10 tareas de sigilo',
+    icon: '👤',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && (t.type === 'Sigilo' || t.text.includes('sin ser visto'))
+      ).length;
+      return completed >= 10;
+    }
+  },
+  {
+    id: 'ach-raider',
+    title: 'Saqueador de Ríos',
+    desc: 'Realiza 5 saqueos fluviales',
+    icon: '⚔️',
+    condition: () => {
+      const completed = tasks.diaria.filter(t => 
+        t.completed && t.text.includes('saqueo fluvial')
+      ).length;
+      return completed >= 5;
+    }
+  },
+  {
+    id: 'ach-irlanda',
+    title: 'Rey de Ériu',
+    desc: 'Completa 10 misiones del DLC de Irlanda',
+    icon: '☘️',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && t.type === 'DLC Irlanda'
+      ).length;
+      return completed >= 10;
+    }
+  },
+  {
+    id: 'ach-paris',
+    title: 'Asediador de Lutetia',
+    desc: 'Completa 8 misiones del DLC de París',
+    icon: '🗼',
+    condition: () => {
+      const completed = tasks.continua.filter(t => 
+        t.completed && t.type === 'DLC París'
+      ).length;
+      return completed >= 8;
+    }
+  },
+  {
+    id: 'ach-level',
+    title: 'El Inmortal',
+    desc: 'Alcanza el nivel 10',
+    icon: '⚡',
+    condition: () => player.level >= 10
+  },
+  {
+    id: 'ach-farmeo',
+    title: 'Tesorero Vikingo',
+    desc: 'Farmea 5000 monedas de plata',
+    icon: '💰',
+    condition: () => player.points >= 5000
+  },
+  {
+    id: 'ach-continua',
+    title: 'Dominio Eterno',
+    desc: 'Completa 3 conjuntos de tareas continuas',
+    icon: '🔥',
+    condition: () => player.continuaSetsCompleted >= 3
+  }
+];
+    let unlockedAchievements = {};
+
+    // === ESTADO DEL JUGADOR ===
+    let player = {
+      points: 0, level: 1, xp: 0,
+      food: 100, sleep: 100, social: 100,
+      lastReset: Date.now(),
+      lastFood: Date.now(), lastSleep: Date.now(), lastSocial: Date.now(),
+      continuaSetsCompleted: 0, weeklyCompleted: 0
+    };
+    let tasks = { diaria: [], continua: [], semanal: [] };
+
+    // === FUNCIONES ===
+    function getRank() {
+      const ranks = ["Jefe de Asentamiento", "Guerrero de Midgard", "Terror de Mercia", "Rey de Irlanda", "Semidiós Nórdico", "El Inmortal"];
+      return ranks[player.level - 1] || ranks[ranks.length - 1];
+    }
+    function getRequiredXP(level) { return level * 100; }
+    function updateLevel() {
+      const maxXp = getRequiredXP(player.level);
+      if (player.xp >= maxXp) {
+        player.xp -= maxXp; player.level++;
+        alert(`¡Ascendiste al nivel ${player.level}! Eres ahora: ${getRank()}`);
+        updateUI();
+      }
+    }
+
+    function generateContextualTask() {
+      const h = new Date().getHours();
+      if (h >= 7 && h < 10) return { text: "🌅 Desayuna con tu clan", type: "Hora", points: 30, id: 'ctx-morning' };
+      if (h >= 12 && h < 14) return { text: "🍽️ Almuerza en Lunden", type: "Hora", points: 35, id: 'ctx-noon' };
+      if (h >= 20 && h < 23) return { text: "🛏️ Ve a dormir", type: "Hora", points: 40, id: 'ctx-sleep' };
+      return { text: "🌍 Explora una región", type: "Hora", points: 25, id: 'ctx-explore' };
+    }
+    function generateFixedDailyTasks() {
+      return [
+        { text: "👥 Habla con Randvi", type: "Diaria", points: 25, id: 'daily-social' },
+        { text: "⚔️ Realiza un saqueo fluvial", type: "Diaria", points: 50, id: 'daily-raider' },
+        { text: "🎲 Juega una partida de Orlog", type: "Diaria", points: 30, id: 'daily-orlog' }
+      ];
+    }
+    function generateDailyTasks() {
+      return [generateContextualTask(), ...generateFixedDailyTasks()];
+    }
+
+    function updateContextualTask() {
+      const index = tasks.diaria.findIndex(t => t.id && t.id.startsWith('ctx-'));
+      if (index !== -1) {
+        const newTask = generateContextualTask();
+        if (tasks.diaria[index].id !== newTask.id) {
+          tasks.diaria[index] = newTask;
+          if (document.getElementById('tab-diaria').classList.contains('active')) {
+            renderTasks('diaria');
+          }
+        }
+      }
+    }
+
+    function startDailyTimer() {
+      const resetInterval = 24 * 60 * 60 * 1000;
+      function updateTimer() {
+        const now = Date.now();
+        const nextReset = player.lastReset + resetInterval;
+        const timeLeft = nextReset - now;
+
+        if (timeLeft <= 0) {
+          tasks.diaria = generateDailyTasks();
+          player.lastReset = now;
+          saveProgress();
+          renderTasks('diaria');
+          document.getElementById('time-left').textContent = "Renovadas";
+        } else {
+          const h = Math.floor(timeLeft / 3600000);
+          const m = Math.floor((timeLeft % 3600000) / 60000);
+          const s = Math.floor((timeLeft % 60000) / 1000);
+          document.getElementById('time-left').textContent = `${h.toString().padStart(2,'0')}:${m.toString().padStart(2,'0')}:${s.toString().padStart(2,'0')}`;
+        }
+      }
+      updateTimer();
+      setInterval(updateTimer, 1000);
+    }
+
+    function loadProgress() {
+      const saved = localStorage.getItem('valhallaChronicle');
+      if (saved) {
+        const data = JSON.parse(saved);
+        player = { ...player, ...data.player };
+        unlockedAchievements = data.unlockedAchievements || {};
+        tasks = data.tasks || tasks;
+      }
+
+      const now = Date.now();
+      const nextReset = player.lastReset + (24 * 60 * 60 * 1000);
+      if (now > nextReset || tasks.diaria.length === 0) {
+        tasks.diaria = generateDailyTasks();
+        player.lastReset = now;
+      }
+
+      saveProgress();
+      updateUI();
+      startDailyTimer();
+      setInterval(updateContextualTask, 60000);
+      setInterval(updateUI, 60000);
+    }
+
+    function saveProgress() {
+      const data = { player, tasks, unlockedAchievements };
+      localStorage.setItem('valhallaChronicle', JSON.stringify(data));
+    }
+
+    function updateUI() {
+      const hoursF = (Date.now() - player.lastFood) / 3600000;
+      const hoursS = (Date.now() - player.lastSleep) / 3600000;
+      const daysSoc = (Date.now() - player.lastSocial) / 86400000;
+
+      player.food = Math.max(0, 100 - hoursF * 15);
+      player.sleep = Math.max(0, 100 - hoursS * 12);
+      player.social = Math.max(0, 100 - daysSoc * 30);
+
+      document.getElementById('food-fill').style.width = player.food + '%';
+      document.getElementById('sleep-fill').style.width = player.sleep + '%';
+      document.getElementById('social-fill').style.width = player.social + '%';
+
+      document.getElementById('food-alert').style.display = player.food < 30 ? 'block' : 'none';
+      document.getElementById('sleep-alert').style.display = player.sleep < 30 ? 'block' : 'none';
+      document.getElementById('social-alert').style.display = player.social < 30 ? 'block' : 'none';
+
+      document.getElementById('points').textContent = player.points;
+      document.getElementById('level').textContent = player.level;
+      document.getElementById('rank').textContent = getRank();
+
+      const maxXp = getRequiredXP(player.level);
+      const xpPercent = (player.xp / maxXp) * 100;
+      document.getElementById('xp-fill').style.width = `${xpPercent}%`;
+    }
+
+    function satisfacer(necesidad) {
+      if (necesidad === 'food') player.food = 100;
+      if (necesidad === 'sleep') player.sleep = 100;
+      if (necesidad === 'social') player.social = 100;
+      saveProgress();
+      updateUI();
+      alert(`✅ Has satisfecho tu necesidad de ${necesidad}.`);
+    }
+
+    function renderAchievements() {
+      const container = document.getElementById('achievements-list');
+      container.innerHTML = '';
+      achievementsList.forEach(ach => {
+        if (ach.condition() && !unlockedAchievements[ach.id]) {
+          unlockedAchievements[ach.id] = true;
+          alert(`🏆 ¡Logro desbloqueado! ${ach.title}`);
+          saveProgress();
+        }
+        const item = document.createElement('div');
+        item.className = `achievement-item ${unlockedAchievements[ach.id] ? '' : 'achievement-locked'}`;
+        item.innerHTML = `<div class="achievement-icon">${unlockedAchievements[ach.id] ? ach.icon : '?'}</div>
+                          <div class="achievement-info"><h4>${ach.title}</h4><p>${ach.desc}</p></div>`;
+        container.appendChild(item);
+      });
+    }
+
+    function generateContinuaTasks() {
+      const pool = [...TASKS_CONTINUA_POOL];
+      const selected = [];
+      for (let i = 0; i < 10 && pool.length > 0; i++) {
+        const rand = Math.floor(Math.random() * pool.length);
+        selected.push({ ...pool[rand], id: 'c' + i, completed: false });
+        pool.splice(rand, 1);
+      }
+      return selected;
+    }
+
+    function generateWeeklyTasks() {
+      return [
+        { text: "Completa 5 tareas de caza", type: "Semanal", points: 100, completed: false, id: 'w1' },
+        { text: "Gana 3 partidas de Orlog", type: "Semanal", points: 90, completed: false, id: 'w2' }
+      ];
+    }
+
+    function renderTasks(zone) {
+      const list = document.getElementById(`tasks-${zone}`);
+      list.innerHTML = '';
+      (tasks[zone] || []).forEach(task => {
+        if (!task.id) task.id = zone + Math.random();
+        const li = document.createElement('li');
+        li.className = `task-item ${task.completed ? 'completed' : ''}`;
+        li.innerHTML = `<input type="checkbox" class="task-checkbox" ${task.completed ? 'checked' : ''}>
+                        <div class="task-content"><div class="task-type">${task.type}</div>${task.text}</div>
+                        <span class="task-points">+${task.points}</span>`;
+        li.querySelector('.task-checkbox').addEventListener('change', () => {
+          if (li.querySelector('.task-checkbox').checked && !task.completed) {
+            task.completed = true;
+            player.points += task.points;
+            player.xp += task.points;
+            updateLevel();
+            if (zone === 'continua' && tasks.continua.filter(t => t.completed).length >= 5) {
+              alert("🎉 ¡Conjunto completado!");
+              tasks.continua = generateContinuaTasks();
+              renderTasks('continua');
+            }
+            saveProgress();
+          }
+          updateUI();
+        });
+        list.appendChild(li);
+      });
+    }
+
+    // === MANEJO DE PESTAÑAS ===
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        const zone = tab.id.replace('tab-', '');
+        document.getElementById(`content-${zone}`).classList.add('active');
+
+        if (zone === 'continua') renderTasks('continua');
+        if (zone === 'semanal') renderTasks('semanal');
+        if (zone === 'logros') renderAchievements();
+      });
+    });
+
+    document.getElementById('reset-btn').addEventListener('click', () => {
+      if (confirm("¿Reiniciar todo?")) {
+        player = { points: 0, level: 1, xp: 0, food: 100, sleep: 100, social: 100, lastFood: Date.now(), lastSleep: Date.now(), lastSocial: Date.now(), continuaSetsCompleted: 0 };
+        tasks = { diaria: generateDailyTasks(), continua: generateContinuaTasks(), semanal: generateWeeklyTasks() };
+        unlockedAchievements = {};
+        saveProgress();
+        renderTasks('diaria');
+        renderTasks('continua');
+        renderTasks('semanal');
+        updateUI();
+      }
+    });
+
+    function renderAll() {
+      renderTasks('diaria');
+      renderTasks('continua');
+      renderTasks('semanal');
+    }
+
+    // === INICIALIZACIÓN ===
+    loadProgress();
+    renderAll();
+    updateUI();
+
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('service-worker.js');
+      });
+    }
+  </script>
+</body>
+</html>
