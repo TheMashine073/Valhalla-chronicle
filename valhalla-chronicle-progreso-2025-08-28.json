@@ -1,0 +1,147 @@
+{
+  "player": {
+    "points": 0,
+    "level": 1,
+    "xp": 0,
+    "food": 63.26570833333333,
+    "sleep": 70.61256666666667,
+    "social": 96.93880902777778,
+    "lastReset": 1756339228767,
+    "lastFood": 1756337407710,
+    "lastSleep": 1756337407710,
+    "lastSocial": 1756337407710,
+    "continuaSetsCompleted": 0,
+    "weeklyCompleted": 0
+  },
+  "tasks": {
+    "diaria": [
+      {
+        "text": "🛏️ Ve a dormir en tu cabaña",
+        "type": "Diaria",
+        "points": 40,
+        "id": "ctx-sleep"
+      },
+      {
+        "text": "👥 Habla con Randvi o Hytta en Ravensthorpe",
+        "type": "Diaria",
+        "points": 25,
+        "id": "daily-social"
+      },
+      {
+        "text": "⚔️ Realiza un saqueo fluvial",
+        "type": "Diaria",
+        "points": 50,
+        "id": "daily-raider"
+      },
+      {
+        "text": "🎲 Juega una partida de Orlog",
+        "type": "Diaria",
+        "points": 30,
+        "id": "daily-orlog"
+      },
+      {
+        "text": "🏹 Mátalos a todos: mata 10 enemigos en una fortaleza",
+        "type": "Diaria",
+        "points": 45,
+        "id": "daily-combat"
+      }
+    ],
+    "continua": [
+      {
+        "text": "Gana una partida de Orlog",
+        "type": "Juego",
+        "points": 30,
+        "id": "c0",
+        "completed": false
+      },
+      {
+        "text": "Gana una partida de Juego de Bebida (Mead Challenge)",
+        "type": "Juego",
+        "points": 30,
+        "id": "c1",
+        "completed": false
+      },
+      {
+        "text": "Vende 20 pieles en un mercado",
+        "type": "Farmeo",
+        "points": 35,
+        "id": "c2",
+        "completed": false
+      },
+      {
+        "text": "Caza un ciervo legendario en Mercia",
+        "type": "Caza",
+        "points": 40,
+        "id": "c3",
+        "completed": false
+      },
+      {
+        "text": "Gana 3 partidas de Orlog seguidas",
+        "type": "Juego",
+        "points": 50,
+        "id": "c4",
+        "completed": false
+      },
+      {
+        "text": "Pesca de noche en el lago de Lunden",
+        "type": "Pesca",
+        "points": 35,
+        "id": "c5",
+        "completed": false
+      },
+      {
+        "text": "Mata a un jefe de fortaleza con arco",
+        "type": "Combate",
+        "points": 60,
+        "id": "c6",
+        "completed": false
+      },
+      {
+        "text": "Domestica un caballo blanco en East Anglia",
+        "type": "Montura",
+        "points": 40,
+        "id": "c7",
+        "completed": false
+      },
+      {
+        "text": "Pesca un salmón legendario en Noruega",
+        "type": "Pesca",
+        "points": 40,
+        "id": "c8",
+        "completed": false
+      },
+      {
+        "text": "Roba 5 cofres escondidos en cuevas",
+        "type": "Farmeo",
+        "points": 40,
+        "id": "c9",
+        "completed": false
+      }
+    ],
+    "semanal": [
+      {
+        "text": "Completa 5 tareas de caza",
+        "type": "Semanal",
+        "points": 100,
+        "completed": false,
+        "id": "w1"
+      },
+      {
+        "text": "Gana 3 partidas de Orlog",
+        "type": "Semanal",
+        "points": 90,
+        "completed": false,
+        "id": "w2"
+      },
+      {
+        "text": "Visita 4 regiones diferentes",
+        "type": "Semanal",
+        "points": 80,
+        "completed": false,
+        "id": "w3"
+      }
+    ]
+  },
+  "unlockedAchievements": {},
+  "exportedAt": "2025-08-28T01:57:27.327Z"
+}
