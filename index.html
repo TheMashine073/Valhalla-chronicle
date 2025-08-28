@@ -268,6 +268,37 @@
     .tab-content.active {
       display: block;
     }
+        .diario-entrada {
+      background: rgba(0,0,0,0.4);
+      border: 1px solid #5D4037;
+      border-radius: 10px;
+      padding: 15px;
+      margin-bottom: 15px;
+    }
+    .diario-fecha {
+      font-size: 0.8em;
+      color: var(--gold);
+      margin-bottom: 10px;
+    }
+    .diario-contenido {
+      margin: 10px 0;
+    }
+    .diario-imagen {
+      max-width: 100%;
+      border-radius: 8px;
+      margin-top: 10px;
+      border: 1px solid var(--gold);
+    }
+    .diario-borrar {
+      background: #8B0000;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      border-radius: 6px;
+      font-size: 0.9em;
+      cursor: pointer;
+      margin-top: 10px;
+    }
   </style>
 </head>
 <body>
@@ -291,6 +322,28 @@
         </div>
         <small>Progreso de Gloria</small>
       </div>
+          <!-- Sección Diario -->
+    <div class="tab-content" id="content-diario">
+      <h3>📖 Tu Crónica Vikinga</h3>
+      <p>Escribe tus hazañas y añade imágenes del modo foto del juego.</p>
+
+      <div style="background: rgba(26,46,6,0.5); padding: 15px; border-radius: 10px; margin-bottom: 20px;">
+        <textarea id="diario-texto" placeholder="Hoy, bajo un cielo tormentoso, desembarcamos en las costas de París..." 
+                  rows="4" style="width: 100%; padding: 10px; border-radius: 6px; border: 1px solid var(--gold); 
+                  background: #000; color: var(--light); font-family: 'MedievalSharp', cursive;"></textarea>
+        
+        <div style="margin: 10px 0;">
+          <label for="diario-imagen" style="display: block; margin-bottom: 5px; color: var(--gold);">🖼️ Añadir imagen (modo foto):</label>
+          <input type="file" id="diario-imagen" accept="image/*" style="color: white;">
+        </div>
+
+        <button class="btn-reset" id="diario-guardar" style="width: 100%;">➕ Añadir Entrada</button>
+      </div>
+
+      <div id="diario-entradas">
+        <!-- Las entradas se cargarán aquí -->
+      </div>
+    </div>
     </div>
 
     <!-- Necesidades -->
@@ -325,11 +378,12 @@
     </div>
 
     <!-- Pestañas -->
-    <div class="tabs">
+        <div class="tabs">
       <button class="tab active" id="tab-diaria">🌞 Diaria</button>
       <button class="tab" id="tab-continua">🔁 Continua</button>
       <button class="tab" id="tab-semanal">📅 Semanal</button>
       <button class="tab" id="tab-logros">🏆 Logros</button>
+      <button class="tab" id="tab-diario">📖 Diario</button>
     </div>
 
     <!-- Sección Diaria -->
@@ -737,6 +791,7 @@
         if (zone === 'continua') renderTasks('continua');
         if (zone === 'semanal') renderTasks('semanal');
         if (zone === 'logros') renderAchievements();
+        if (zone === 'diario') renderizarDiario();
       });
     });
 
@@ -826,6 +881,96 @@ document.getElementById('import-btn').addEventListener('click', () => {
   
   input.click();
 });
+// === MANEJO DEL DIARIO ===
+let entradasDiario = [];
+
+// Cargar entradas al iniciar
+function cargarDiario() {
+  const guardadas = localStorage.getItem('valhalla_diario');
+  if (guardadas) {
+    entradasDiario = JSON.parse(guardadas);
+  }
+  renderizarDiario();
+}
+
+// Guardar entrada
+document.getElementById('diario-guardar').addEventListener('click', () => {
+  const texto = document.getElementById('diario-texto').value.trim();
+  const inputImagen = document.getElementById('diario-imagen');
+  
+  if (!texto) {
+    alert("⚠️ Escribe algo en tu crónica antes de añadirla.");
+    return;
+  }
+
+  const nuevaEntrada = {
+    id: Date.now(),
+    texto: texto,
+    fecha: new Date().toLocaleString('es-ES', { 
+      day: '2-digit', month: 'long', year: 'numeric', hour: '2-digit', minute: '2-digit' 
+    }),
+    imagen: null
+  };
+
+  // Si hay imagen, conviértela a base64
+  if (inputImagen.files && inputImagen.files[0]) {
+    const reader = new FileReader();
+    reader.onload = function(e) {
+      nuevaEntrada.imagen = e.target.result;
+      entradasDiario.unshift(nuevaEntrada); // Añadir al inicio
+      guardarDiario();
+      renderizarDiario();
+      // Limpiar
+      document.getElementById('diario-texto').value = '';
+      inputImagen.value = '';
+    };
+    reader.readAsDataURL(inputImagen.files[0]);
+  } else {
+    entradasDiario.unshift(nuevaEntrada);
+    guardarDiario();
+    renderizarDiario();
+    // Limpiar
+    document.getElementById('diario-texto').value = '';
+    inputImagen.value = '';
+  }
+});
+
+function guardarDiario() {
+  localStorage.setItem('valhalla_diario', JSON.stringify(entradasDiario));
+}
+
+function renderizarDiario() {
+  const contenedor = document.getElementById('diario-entradas');
+  contenedor.innerHTML = '';
+
+  if (entradasDiario.length === 0) {
+    contenedor.innerHTML = '<p style="color: #AAA; text-align: center;">No hay entradas aún. ¡Escribe tu primera hazaña!</p>';
+    return;
+  }
+
+  entradasDiario.forEach(entrada => {
+    const div = document.createElement('div');
+    div.className = 'diario-entrada';
+    div.innerHTML = `
+      <div class="diario-fecha">📅 ${entrada.fecha}</div>
+      <div class="diario-contenido">${entrada.texto.replace(/\n/g, '<br>')}</div>
+      ${entrada.imagen ? `<img src="${entrada.imagen}" class="diario-imagen">` : ''}
+      <button class="diario-borrar" onclick="borrarEntrada(${entrada.id})">🗑️ Eliminar</button>
+    `;
+    contenedor.appendChild(div);
+  });
+}
+
+function borrarEntrada(id) {
+  if (confirm("¿Eliminar esta entrada del diario?")) {
+    entradasDiario = entradasDiario.filter(e => e.id !== id);
+    guardarDiario();
+    renderizarDiario();
+  }
+}
+
+// Inicializar diario
+cargarDiario();
   </script>
 </body>
 </html>
