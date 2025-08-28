@@ -225,6 +225,8 @@
       margin: 0;
     }
 
+
+
     .btn-reset {
       display: block;
       margin: 25px auto;
@@ -357,6 +359,11 @@
       <h3>🏆 Logros Vikingos</h3>
       <div id="achievements-list"></div>
     </div>
+
+    <div style="text-align: center; margin: 15px 0; display: flex; gap: 10px; justify-content: center;">
+  <button class="btn-reset" id="export-btn">💾 Exportar Progreso</button>
+  <button class="btn-reset" id="import-btn">📤 Importar Progreso</button>
+</div>
 
     <button class="btn-reset" id="reset-btn">🔁 Reiniciar Todo</button>
 
@@ -762,6 +769,63 @@
         navigator.serviceWorker.register('service-worker.js');
       });
     }
+    // === EXPORTAR PROGRESO ===
+document.getElementById('export-btn').addEventListener('click', () => {
+  const data = {
+    player: player,
+    tasks: tasks,
+    unlockedAchievements: unlockedAchievements,
+    exportedAt: new Date().toISOString()
+  };
+  const jsonStr = JSON.stringify(data, null, 2);
+  const blob = new Blob([jsonStr], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = `valhalla-chronicle-progreso-${new Date().toISOString().split('T')[0]}.json`;
+  a.click();
+  
+  alert("✅ Progreso exportado. Guarda este archivo para sincronizar.");
+});
+
+// === IMPORTAR PROGRESO ===
+document.getElementById('import-btn').addEventListener('click', () => {
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = '.json';
+  
+  input.onchange = (e) => {
+    const file = e.target.files[0];
+    const reader = new FileReader();
+    
+    reader.onload = (event) => {
+      try {
+        const data = JSON.parse(event.target.result);
+        
+        // Restaurar datos
+        player = data.player;
+        tasks = data.tasks;
+        unlockedAchievements = data.unlockedAchievements || {};
+        
+        saveProgress(); // Guardar en localStorage
+        updateUI();
+        renderTasks('diaria');
+        renderTasks('continua');
+        renderTasks('semanal');
+        renderAchievements();
+        
+        alert("✅ Progreso importado con éxito.");
+      } catch (err) {
+        alert("❌ Error al importar: archivo inválido o corrupto.");
+      }
+    };
+    
+    reader.readAsText(file);
+  };
+  
+  input.click();
+});
   </script>
 </body>
 </html>
