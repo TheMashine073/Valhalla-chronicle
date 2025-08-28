@@ -452,18 +452,93 @@
 
     // === TAREAS CONTINUAS ===
     const TASKS_CONTINUA_POOL = [
-      { text: "Pesca 5 peces en el río Shannon (Irlanda)", type: "Pesca", points: 30 },
-      { text: "Caza un ciervo legendario en Mercia", type: "Caza", points: 40 },
-      { text: "Gana una partida de Orlog", type: "Juego", points: 30 },
-      { text: "Roba 5 cofres escondidos en cuevas", type: "Farmeo", points: 40 },
-      { text: "Mata a 20 enemigos con armas pesadas", type: "Combate", points: 40 },
-      { text: "Visita el Círculo de Piedras de Tara (Irlanda)", type: "Exploración", points: 40 },
-      { text: "Conseguir un punto de habilidad", type: "Progreso", points: 40 },
-      { text: "Completa una misión de rebelde irlandés", type: "DLC Irlanda", points: 50 },
-      { text: "Completa una misión de asedio en París", type: "DLC París", points: 60 },
-      { text: "Domestica un caballo blanco", type: "Montura", points: 40 },
-      { text: "Completa un asalto sin morir", type: "Liderazgo", points: 75 }
-    ];
+  // 🎣 PESCA
+  { text: "Pesca 5 peces en el río Shannon (Irlanda)", type: "Pesca", points: 30 },
+  { text: "Pesca un salmón legendario en Noruega", type: "Pesca", points: 40 },
+  { text: "Pesca de noche en el lago de Lunden", type: "Pesca", points: 35 },
+  { text: "Pesca en el lago de Glæsting scire", type: "Pesca", points: 30 },
+  { text: "Pesca cerca del monasterio de Ravensthorpe", type: "Pesca", points: 30 },
+
+  // 🦌 CAZA
+  { text: "Caza un ciervo legendario en Mercia", type: "Caza", points: 40 },
+  { text: "Caza un oso en las montañas de Sudrec", type: "Caza", points: 50 },
+  { text: "Caza 10 lobos salvajes", type: "Caza", points: 60 },
+  { text: "Caza un lobo negro en East Anglia", type: "Caza", points: 50 },
+  { text: "Caza un jabalí en Defnas", type: "Caza", points: 40 },
+  { text: "Caza un águila en Connacht", type: "Caza", points: 45 },
+
+  // 🎲 MINIJUEGOS
+  { text: "Gana una partida de Orlog", type: "Juego", points: 30 },
+  { text: "Gana una partida de Juego de Bebida (Mead Challenge)", type: "Juego", points: 30 },
+  { text: "Gana 3 partidas de Orlog seguidas", type: "Juego", points: 50 },
+  { text: "Gana un duelo de bardos en una taberna", type: "Arte", points: 35 },
+  { text: "Juega Orlog con Randvi en Ravensthorpe", type: "Juego", points: 30 },
+
+  // 💰 FARMEO
+  { text: "Roba 5 cofres escondidos en cuevas", type: "Farmeo", points: 40 },
+  { text: "Farmea 1000 monedas de plata", type: "Farmeo", points: 50 },
+  { text: "Vende 20 pieles en un mercado", type: "Farmeo", points: 35 },
+  { text: "Roba un cofre en una fortaleza sin ser visto", type: "Sigilo", points: 50 },
+  { text: "Farmea hierro en minas de Ledecestrescire", type: "Farmeo", points: 40 },
+  { text: "Roba un cofre del templo celta en Meonia", type: "Farmeo", points: 45 },
+
+  // ⚔️ COMBATE
+  { text: "Mata a 20 enemigos con armas pesadas", type: "Combate", points: 40 },
+  { text: "Mata a 10 guardias sin ser detectado", type: "Sigilo", points: 50 },
+  { text: "Mata a un jefe de fortaleza con arco", type: "Combate", points: 60 },
+  { text: "Mata a 5 enemigos con lanzamiento de hacha", type: "Combate", points: 45 },
+  { text: "Completa un asalto sin morir", type: "Liderazgo", points: 75 },
+  { text: "Mata a un druida oscuro en Connacht", type: "Combate", points: 50 },
+  { text: "Mata a un comandante franco en París", type: "Combate", points: 70 },
+
+  // 🌍 EXPLORACIÓN
+  { text: "Visita el Círculo de Piedras de Tara (Irlanda)", type: "Exploración", points: 40 },
+  { text: "Visita la Catedral de Notre-Dame (París)", type: "Exploración", points: 45 },
+  { text: "Toma una foto épica en el Acantilado de Ravensthorpe", type: "Exploración", points: 30 },
+  { text: "Explora la cueva de los druidas en Connacht", type: "Exploración", points: 50 },
+  { text: "Visita el templo de Odin en Noruega", type: "Exploración", points: 40 },
+  { text: "Explora el bosque encantado de Sciropescire", type: "Exploración", points: 45 },
+  { text: "Visita la tumba de los antepasados en Oxenefordscire", type: "Exploración", points: 40 },
+  { text: "Explora la fortaleza abandonada de Lunden", type: "Exploración", points: 35 },
+  { text: "Visita el monasterio de Glæsting scire", type: "Exploración", points: 30 },
+  { text: "Explora la mina de hierro en Cent", type: "Exploración", points: 30 },
+  { text: "Visita el puente colgante de Suthsexe", type: "Exploración", points: 35 },
+  { text: "Explora el campo de batalla de Elmet", type: "Exploración", points: 40 },
+  { text: "Visita el lago de East Anglia", type: "Exploración", points: 30 },
+  { text: "Explora el fuerte romano en Defnas", type: "Exploración", points: 45 },
+  { text: "Visita el asentamiento vikingo en Jorvik", type: "Exploración", points: 35 },
+  { text: "Explora el templo celta en Meonia", type: "Exploración", points: 50 },
+  { text: "Visita el cráter del meteorito en Sciropescire", type: "Exploración", points: 40 },
+  { text: "Explora el cementerio de barcos en Noruega", type: "Exploración", points: 50 },
+  { text: "Visita el altar druídico en Connacht", type: "Exploración", points: 45 },
+  { text: "Explora el bosque de Wicklow (Irlanda)", type: "Exploración", points: 40 },
+
+  // 🛠️ PROGRESO
+  { text: "Conseguir un punto de habilidad en el árbol de Odín", type: "Progreso", points: 40 },
+  { text: "Desbloquea una nueva habilidad de sigilo", type: "Progreso", points: 45 },
+  { text: "Mejora tu casa en Ravensthorpe", type: "Construcción", points: 35 },
+  { text: "Desbloquea una habilidad de combate pesado", type: "Progreso", points: 45 },
+  { text: "Mejora tu barco con nuevas decoraciones", type: "Construcción", points: 40 },
+
+  // 🌿 DLC: IRLANDA
+  { text: "Completa una misión de rebelde irlandés", type: "DLC Irlanda", points: 50 },
+  { text: "Mata a un druida oscuro en Connacht", type: "DLC Irlanda", points: 45 },
+  { text: "Completa una exigencia real del rey irlandés", type: "DLC Irlanda", points: 60 },
+  { text: "Roba un tesoro del monasterio de Durrow", type: "DLC Irlanda", points: 50 },
+  { text: "Gana una partida de Orlog en un campamento rebelde", type: "DLC Irlanda", points: 35 },
+
+  // 🏰 DLC: PARÍS
+  { text: "Completa una misión de asedio en París", type: "DLC París", points: 60 },
+  { text: "Sobrevive una noche en el campamento franco", type: "DLC París", points: 50 },
+  { text: "Roba un documento secreto del palacio", type: "DLC París", points: 55 },
+  { text: "Mata a un comandante franco en combate", type: "DLC París", points: 70 },
+  { text: "Escapa de una trampa en el subsuelo de París", type: "DLC París", points: 50 },
+
+  // 🐺 MONTURAS
+  { text: "Domestica un caballo blanco en East Anglia", type: "Montura", points: 40 },
+  { text: "Encuentra y monta el lobo negro", type: "Montura", points: 50 },
+  { text: "Domestica un oso en Noruega", type: "Montura", points: 60 }
+];
 
     // === LOGROS ===
     const achievementsList = [
@@ -565,50 +640,99 @@
     }
 
     function loadProgress() {
-      progressRef.once('value')
-        .then(snapshot => {
-          const data = snapshot.val();
-          if (data) {
-            localStorage.setItem('valhallaChronicle', JSON.stringify(data));
-            player = { ...player, ...data.player };
-            tasks = data.tasks || tasks;
-            unlockedAchievements = data.unlockedAchievements || {};
-            entradasDiario = data.diario || [];
-          } else {
-            const saved = localStorage.getItem('valhallaChronicle');
-            if (saved) {
-              const localData = JSON.parse(saved);
-              player = { ...player, ...localData.player };
-              tasks = localData.tasks || tasks;
-              unlockedAchievements = localData.unlockedAchievements || {};
-              entradasDiario = localData.diario || [];
+  progressRef.once('value')
+    .then(snapshot => {
+      const data = snapshot.val();
+      if (data) {
+        localStorage.setItem('valhallaChronicle', JSON.stringify(data));
+        player = { ...player, ...data.player };
+        tasks = data.tasks || { diaria: [], continua: [], semanal: [] };
+
+        // ✅ Reconstruir tareas semanales con condiciones
+        const weeklyTemplate = generateWeeklyTasks(); // Plantilla con condiciones
+        if (tasks.semanal && Array.isArray(tasks.semanal)) {
+          // Mantener estado de completado
+          weeklyTemplate.forEach(tareaNueva => {
+            const tareaGuardada = tasks.semanal.find(t => t.id === tareaNueva.id);
+            if (tareaGuardada && tareaGuardada.completed) {
+              tareaNueva.completed = true;
             }
-          }
-          if (!player.lastReset) player.lastReset = Date.now();
+          });
+        }
+        tasks.semanal = weeklyTemplate;
 
-          updateUI();
-          renderAll();
-          renderizarDiario();
-          startDailyTimer(); // ✅ Iniciar temporizador
-        })
-        .catch(err => {
-          console.error('❌ No se pudo conectar a Firebase. Usando localStorage.', err);
-          const saved = localStorage.getItem('valhallaChronicle');
-          if (saved) {
-            const data = JSON.parse(saved);
-            player = { ...player, ...data.player };
-            tasks = data.tasks || tasks;
-            unlockedAchievements = data.unlockedAchievements || {};
-            entradasDiario = data.diario || [];
-          }
-          if (!player.lastReset) player.lastReset = Date.now();
-          updateUI();
-          renderAll();
-          renderizarDiario();
-          startDailyTimer();
-        });
-    }
+        unlockedAchievements = data.unlockedAchievements || {};
+        entradasDiario = data.diario || [];
+      } else {
+        // Si no hay datos en Firebase, usa localStorage
+        const saved = localStorage.getItem('valhallaChronicle');
+        if (saved) {
+          const localData = JSON.parse(saved);
+          player = { ...player, ...localData.player };
+          tasks = localData.tasks || { diaria: [], continua: [], semanal: [] };
 
+          // ✅ Reconstruir tareas semanales desde localStorage
+          const weeklyTemplate = generateWeeklyTasks();
+          if (tasks.semanal && Array.isArray(tasks.semanal)) {
+            weeklyTemplate.forEach(tareaNueva => {
+              const tareaGuardada = tasks.semanal.find(t => t.id === tareaNueva.id);
+              if (tareaGuardada && tareaGuardada.completed) {
+                tareaNueva.completed = true;
+              }
+            });
+          }
+          tasks.semanal = weeklyTemplate;
+
+          unlockedAchievements = localData.unlockedAchievements || {};
+          entradasDiario = localData.diario || [];
+        }
+      }
+
+      // Asegurar que lastReset exista
+      if (!player.lastReset) player.lastReset = Date.now();
+
+      // Inicializar UI
+      updateUI();
+      renderAll();
+      checkWeeklyTasks(); // Verificar al cargar
+      setInterval(checkWeeklyTasks, 60000); // Cada minuto
+      renderizarDiario();
+      startDailyTimer();
+    })
+    .catch(err => {
+      console.error('❌ No se pudo conectar a Firebase. Usando localStorage.', err);
+      const saved = localStorage.getItem('valhallaChronicle');
+      if (saved) {
+        const data = JSON.parse(saved);
+        player = { ...player, ...data.player };
+        tasks = data.tasks || { diaria: [], continua: [], semanal: [] };
+
+        // ✅ Reconstruir tareas semanales en modo offline
+        const weeklyTemplate = generateWeeklyTasks();
+        if (tasks.semanal && Array.isArray(tasks.semanal)) {
+          weeklyTemplate.forEach(tareaNueva => {
+            const tareaGuardada = tasks.semanal.find(t => t.id === tareaNueva.id);
+            if (tareaGuardada && tareaGuardada.completed) {
+              tareaNueva.completed = true;
+            }
+          });
+        }
+        tasks.semanal = weeklyTemplate;
+
+        unlockedAchievements = data.unlockedAchievements || {};
+        entradasDiario = data.diario || [];
+      }
+
+      if (!player.lastReset) player.lastReset = Date.now();
+
+      updateUI();
+      renderAll();
+      checkWeeklyTasks();
+      setInterval(checkWeeklyTasks, 60000);
+      renderizarDiario();
+      startDailyTimer();
+    });
+}
     function saveProgress() {
       const data = { player, tasks, unlockedAchievements, diario: entradasDiario };
       localStorage.setItem('valhallaChronicle', JSON.stringify(data));
@@ -681,11 +805,109 @@
     }
 
     function generateWeeklyTasks() {
-      return [
-        { text: "Completa 5 tareas de caza", type: "Semanal", points: 100, completed: false, id: 'w1' },
-        { text: "Gana 3 partidas de Orlog", type: "Semanal", points: 90, completed: false, id: 'w2' }
-      ];
+  return [
+    {
+      id: 'w1',
+      text: "🏹 Maestro del Arco: completa 10 tareas de combate a distancia",
+      type: "Semanal",
+      points: 100,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Combate' || t.text.includes('arco') || t.text.includes('distancia'))
+        ).length >= 10;
+      }
+    },
+    {
+      id: 'w2',
+      text: "🐺 Hermano de la Naturaleza: completa 8 tareas de caza o exploración",
+      type: "Semanal",
+      points: 90,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Caza' || t.type === 'Exploración')
+        ).length >= 8;
+      }
+    },
+    {
+      id: 'w3',
+      text: "⚔️ Terror de Mercia: completa 12 tareas de combate pesado",
+      type: "Semanal",
+      points: 110,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Combate' || t.text.includes('pesado') || t.text.includes('asalto'))
+        ).length >= 12;
+      }
+    },
+    {
+      id: 'w4',
+      text: "🎣 Pescador del Norte: completa 6 tareas de pesca",
+      type: "Semanal",
+      points: 80,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && t.type === 'Pesca'
+        ).length >= 6;
+      }
+    },
+    {
+      id: 'w5',
+      text: "🧠 Estratega Vikingo: completa 5 tareas de sigilo o inteligencia",
+      type: "Semanal",
+      points: 95,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Sigilo' || t.text.includes('sin ser visto') || t.text.includes('espía'))
+        ).length >= 5;
+      }
+    },
+    {
+      id: 'w6',
+      text: "🏰 Constructor de Ravensthorpe: mejora 3 edificios",
+      type: "Semanal",
+      points: 100,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Construcción' || t.text.includes('mejora') || t.text.includes('construye'))
+        ).length >= 3;
+      }
+    },
+    {
+      id: 'w7',
+      text: "🛡️ Campeón de los Clanes: completa 15 tareas de liderazgo",
+      type: "Semanal",
+      points: 120,
+      completed: false,
+      condition: () => {
+        return tasks.continua.filter(t => 
+          t.completed && 
+          (t.type === 'Liderazgo' || t.text.includes('asalto') || t.text.includes('lidera'))
+        ).length >= 15;
+      }
+    },
+    {
+      id: 'w8',
+      text: "📜 Cronista de la Gloria: escribe 4 entradas en el diario",
+      type: "Semanal",
+      points: 85,
+      completed: false,
+      condition: () => {
+        return entradasDiario.length >= 4;
+      }
     }
+  ];
+}
 
     function renderTasks(zone) {
       const list = document.getElementById(`tasks-${zone}`);
@@ -883,6 +1105,24 @@
         navigator.serviceWorker.register('service-worker.js');
       });
     }
+   
+    // === VERIFICAR TAREAS SEMANALES ===
+function checkWeeklyTasks() {
+  let changed = false;
+  tasks.semanal.forEach(task => {
+    if (!task.completed && task.condition && task.condition()) {
+      task.completed = true;
+      player.points += task.points;
+      player.xp += task.points;
+      changed = true;
+    }
+  });
+  if (changed) {
+    saveProgress();
+    updateUI();
+    renderTasks('semanal');
+  }
+}
   </script>
 </body>
 </html>
